@@ -9,3 +9,5 @@ import warnings
 warnings.filterwarnings('ignore')
 %matplotlib inline
 
+data = pd.read_csv('train.csv')
+print(data.columns)
