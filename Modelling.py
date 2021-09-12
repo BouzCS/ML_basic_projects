@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep  4 18:05:20 2021
-
 @author: Dragox.RS
 """
 
 # Imports
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import ElasticNet, Lasso,  BayesianRidge, LassoLarsIC, Ridge
+from sklearn.linear_model import ElasticNet, Lasso,  BayesianRidge, Ridge
 from sklearn.ensemble import RandomForestRegressor,  GradientBoostingRegressor
-from sklearn.kernel_ridge import KernelRidge
 from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.preprocessing import RobustScaler
-from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin, clone
-from sklearn.model_selection import KFold, cross_val_score, train_test_split, GridSearchCV
+from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error,make_scorer,f1_score,precision_score,recall_score,accuracy_score
 import xgboost as xgb
 from xgboost.sklearn import XGBRegressor
@@ -24,7 +21,7 @@ import re
 
 # Definitions
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
-%matplotlib inline
+
 #njobs = 4
 
 
@@ -69,11 +66,11 @@ print(grid.best_params_)
 print('Score of best regressor :\t{}'.format(grid.score(X_test, y_test)))
 
 
-#RandomForest
+# #RandomForest
 
 rf = RandomForestRegressor(random_state=42)
 
-# #Empirical good default values are max_features=(n_features)/3 for regression problems, and max_features=sqrt(n_features) for classification tasks
+# # #Empirical good default values are max_features=(n_features)/3 for regression problems, and max_features=sqrt(n_features) for classification tasks
 list_max_features=list(map(int,np.around(np.logspace(-4, 1, 8)+74)))
 paramrf_grid = [
     {
@@ -91,7 +88,7 @@ prediction_rf = grid_rf.predict(X_test)
 print(grid_rf.best_params_)
 print('Score of best rf_regressor :\t{}'.format(grid_rf.score(X_test, y_test)))
 
-#--- List of important features ---
+# #--- List of important features ---
 
 features_list = X_train.columns.values
 feature_importance = grid_rf.best_estimator_.feature_importances_
@@ -108,7 +105,7 @@ plt.draw()
 plt.show()
 
 
-#XGBoost
+# #XGBoost
 
 xgb_model = xgb.XGBClassifier(objective = "binary:logistic")
 
@@ -154,12 +151,12 @@ print(grid_xgb.best_params_)
 print('Score of best xgb_regressor :\t{}'.format(grid_xgb.score(X_test, y_test)))
 
 
-model_lgb = lgb.LGBMRegressor(objective='regression',num_leaves=5,
+model_lgb = lgb.LGBMRegressor(objective='regression',num_leaves=5,boosting='gbdt',
                               learning_rate=0.05, n_estimators=720,
                               max_bin = 55, bagging_fraction = 0.8,
                               bagging_freq = 5, feature_fraction = 0.2319,
                               feature_fraction_seed=9, bagging_seed=9,
-                              min_data_in_leaf =6, min_sum_hessian_in_leaf = 11,silent=True)
+                              min_data_in_leaf =6, min_sum_hessian_in_leaf = 11,silent=True,device_type="gpu")
 
 model_lgb.fit(X_train, y_train)
 prediction_lgb = model_lgb.predict(X_test)
@@ -173,10 +170,10 @@ print('Score of best lgb_regressr :\t{}'.format(model_lgb.score(X_test, y_test))
 # Score of best regressor :	0.9113107783963508
 
 # {'max_depth': 8, 'max_features': 84, 'n_estimators': 100}
-# Score of best rf_regressor :	0.849346432226536
+# Score of best rf_regressor :	0.8783815664351564
 
 
-=# {'colsample_bytree': 0.7, 'learning_rate': 0.03, 'max_depth': 5, 'min_child_weight': 4, 'n_estimators': 500, 'objective': 'reg:linear', 'subsample': 0.7}
-# Score of best xgb_regressor :	0.897131087620481
+# {'colsample_bytree': 0.7, 'learning_rate': 0.03, 'max_depth': 5, 'min_child_weight': 4, 'n_estimators': 500, 'objective': 'reg:linear', 'subsample': 0.7}
+# Score of best xgb_regressor :	0.901764050624076
 
-# Score of best lgb_regressr :	0.897780825244955
+# Score of best lgb_regressr :	0.9151600470348781 // The best one
