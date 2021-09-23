@@ -16,6 +16,7 @@ from sklearn.model_selection import cross_val_score, train_test_split, GridSearc
 from sklearn.ensemble import (RandomForestClassifier, AdaBoostClassifier, 
                              ExtraTreesClassifier)
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, f1_score
 
@@ -26,7 +27,7 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 train = pd.read_csv("trainF.csv")
 del train['Unnamed: 0']
-#train = train.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x)) #for_lightgbm_model_json_solution
+train = train.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x)) #for_lightgbm_model_json_solution
 
 
 X = train[:train.shape[0]]
@@ -56,16 +57,16 @@ param_lgr_grid = [
     }
 ]
 
-# grid_lgr = GridSearchCV(pip_lgr, param_grid=param_lgr_grid, cv=5, n_jobs=-1, verbose=2)
-# grid_lgr.fit(X_train, y_train)
+grid_lgr = GridSearchCV(pip_lgr, param_grid=param_lgr_grid, cv=5, n_jobs=-1, verbose=2)
+grid_lgr.fit(X_train, y_train)
 
-# predicted = grid_lgr.predict(X_test)
+predicted = grid_lgr.predict(X_test)
 
 
-# print(grid_lgr.best_params_)
-# print('Score of best classifier :\t{}'.format(grid_lgr.score(X_test, y_test)))
+print(grid_lgr.best_params_)
+print('Score of best classifier :\t{}'.format(grid_lgr.score(X_test, y_test)))
 
-# print(classification_report(y_test, predicted))
+print(classification_report(y_test, predicted))
 
 # #Decisive Tree Models
 
@@ -73,15 +74,15 @@ rf = RandomForestClassifier(random_state=12)
 
 #Empirical good default values are max_features=(n_features)/3 for regression problems, and max_features=sqrt(n_features) for classification tasks
 
-# paramrf_grid = [
-#     {
-#       'n_estimators':[100,81,1200, 1400, 1600, 1800, 2000],
-#     'max_features':['sqrt'],
-#     'max_depth': [5,6,30],
-#     'min_samples_split': [10,20],
-#     'min_samples_leaf': [4,12]
-#     }
-# ]
+paramrf_grid = [
+    {
+      'n_estimators':[100,81,1200, 1400, 1600, 1800, 2000],
+    'max_features':['sqrt'],
+    'max_depth': [5,6,30],
+    'min_samples_split': [10,20],
+    'min_samples_leaf': [4,12]
+    }
+]
 
 rf_param_grid = {"max_depth": [None],
               "max_features": [1, 3, 10],
@@ -91,46 +92,46 @@ rf_param_grid = {"max_depth": [None],
               "n_estimators" :[100,300],
               "criterion": ["gini"]}
 
-# paramrf_grid = { 
-#     'n_estimators': [200, 500],
-#     'max_features': ['auto', 'sqrt', 'log2'],
-#     'max_depth' : [4,5,6,7,8],
-#     'criterion' :['gini', 'entropy']
-# }
+paramrf_grid = { 
+    'n_estimators': [200, 500],
+    'max_features': ['auto', 'sqrt', 'log2'],
+    'max_depth' : [4,5,6,7,8],
+    'criterion' :['gini', 'entropy']
+}
 
 
 
-# grid_rf=GridSearchCV(rf, param_grid=rf_param_grid, cv=6, n_jobs=-1, verbose=2)
-# grid_rf.fit(X_train, y_train)
+grid_rf=GridSearchCV(rf, param_grid=rf_param_grid, cv=6, n_jobs=-1, verbose=2)
+grid_rf.fit(X_train, y_train)
 
 
 
-# prediction_rf = grid_rf.predict(X_test)
+prediction_rf = grid_rf.predict(X_test)
 
-# print(grid_rf.best_params_)
-# print('Score of best rf_classifier :\t{}'.format(grid_rf.score(X_test, y_test)))
-# print(classification_report(y_test, prediction_rf))
+print(grid_rf.best_params_)
+print('Score of best rf_classifier :\t{}'.format(grid_rf.score(X_test, y_test)))
+print(classification_report(y_test, prediction_rf))
 
 # {'bootstrap': False, 'criterion': 'gini', 'max_depth': None, 'max_features': 3, 'min_samples_leaf': 10, 'min_samples_split': 2, 'n_estimators': 300}
 # Score of best rf_classifier :	0.823728813559322
 
 #SVC
-# SVMC = SVC(probability=True)
+SVMC = SVC(probability=True)
     
-# svc_param_grid = {'kernel': ['rbf', 'poly', 'sigmoid','linear'], 
-#                   'gamma': [ 0.001, 0.01, 0.1, 1],
-#                   'C': [0.1,1, 10, 50, 100, 1000]}
+svc_param_grid = {'kernel': ['rbf', 'poly', 'sigmoid','linear'], 
+                  'gamma': [ 0.001, 0.01, 0.1, 1],
+                  'C': [0.1,1, 10, 50, 100, 1000]}
 
-# grid_svc=GridSearchCV(SVMC, param_grid=svc_param_grid, cv=6, n_jobs=-1, verbose=2)
-# grid_svc.fit(X_train, y_train)
+grid_svc=GridSearchCV(SVMC, param_grid=svc_param_grid, cv=6, n_jobs=-1, verbose=2)
+grid_svc.fit(X_train, y_train)
 
 
 
-# prediction_svc = grid_svc.predict(X_test)
+prediction_svc = grid_svc.predict(X_test)
 
-# print(grid_svc.best_params_)
-# print('Score of best svc_classifier :\t{}'.format(grid_svc.score(X_test, y_test)))
-# print(classification_report(y_test, prediction_svc))
+print(grid_svc.best_params_)
+print('Score of best svc_classifier :\t{}'.format(grid_svc.score(X_test, y_test)))
+print(classification_report(y_test, prediction_svc))
 
 
 # {'C': 50, 'gamma': 0.01, 'kernel': 'rbf'}
@@ -154,17 +155,17 @@ TC = DecisionTreeClassifier(random_state=45)
 ABC = AdaBoostClassifier(base_estimator = TC)
 
 
-# grid_ada_param={
-#             'base_estimator__criterion':['gini','entropy'],
-#             'base_estimator__splitter':['best','random'],
-#             'base_estimator__max_depth':[5,6,8],
-#             'base_estimator__min_samples_leaf':[6,10,12],
-#             'base_estimator__max_features':['sqrt','log2'],
+grid_ada_param={
+            'base_estimator__criterion':['gini','entropy'],
+            'base_estimator__splitter':['best','random'],
+            'base_estimator__max_depth':[5,6,8],
+            'base_estimator__min_samples_leaf':[6,10,12],
+            'base_estimator__max_features':['sqrt','log2'],
             
-#             'n_estimators': [100,300,500],
-#             'learning_rate':[0.001,0.05,0.01,0.1],
-#             'algorithm':['SAMME', 'SAMME.R']
-#     }
+            'n_estimators': [100,300,500],
+            'learning_rate':[0.001,0.05,0.01,0.1],
+            'algorithm':['SAMME', 'SAMME.R']
+    }
 grid_ada_param={
             'base_estimator__criterion':['gini'],
             'base_estimator__splitter':['best'],
@@ -177,16 +178,16 @@ grid_ada_param={
             'algorithm':['SAMME']
     }
 
-# grid_ada=GridSearchCV(ABC, param_grid=grid_ada_param, cv=6, n_jobs=-1, verbose=2)
-# grid_ada.fit(X_train, y_train)
+grid_ada=GridSearchCV(ABC, param_grid=grid_ada_param, cv=6, n_jobs=-1, verbose=2)
+grid_ada.fit(X_train, y_train)
 
 
 
-# prediction_ada = grid_ada.predict(X_test)
+prediction_ada = grid_ada.predict(X_test)
 
-# print(grid_ada.best_params_)
-# print('Score of best ada_classifier :\t{}'.format(grid_ada.score(X_test, y_test)))
-# print(classification_report(y_test, prediction_ada))
+print(grid_ada.best_params_)
+print('Score of best ada_classifier :\t{}'.format(grid_ada.score(X_test, y_test)))
+print(classification_report(y_test, prediction_ada))
 # Score of best ada_classifier :	0.8338983050847457
 
 
@@ -227,5 +228,53 @@ prediction_xgb = grid_xgb.predict(X_test)
 
 print(grid_xgb.best_params_)
 print('Score of best xgb_regressor :\t{}'.format(grid_xgb.score(X_test, y_test)))
+
 # {'colsample_bytree': 0.01, 'eta': 0.20000000000000004, 'gamma': 2, 'min_child_weight': 0.01, 'n_estimators': 300, 'subsample': 0.5623413251903491}
 # Score of best xgb_regressor :	0.8203389830508474
+
+
+# Param_GRID
+# grid_n_estimator = [10, 50, 100, 300]
+# grid_ratio_max_samples = [.1, .25, .5, .75, 1.0]
+# grid_learn = [.01, .03, .05, .1, .25]
+# grid_max_depth = [2, 4, 6, 8, 10, None]
+# grid_min_samples = [5, 10, .03, .05, .10]
+# grid_criterion = ['gini', 'entropy']
+# grid_bool = [True, False]
+# grid_seed = [0]
+
+#KNN
+
+knn_model = KNeighborsClassifier()
+
+knn_pipe = Pipeline([
+        ('sc', StandardScaler()),     
+        ('knn', KNeighborsClassifier()) 
+    ])
+
+knn_param = {
+        'knn__n_neighbors': [7, 9, 13,11,15,19,21], # usually odd numbers
+        'knn__weights': ['uniform', 'distance'],
+        'knn__algorithm':['auto','ball_tree','kd_tree','brute'],
+        'knn__leaf_size':np.arange(10,53,6).tolist(),
+        'knn__p':[1,2]
+    }
+
+grid_knn = GridSearchCV(knn_pipe, 
+                    param_grid = knn_param, 
+                    n_jobs = -1, 
+                    cv = 5,
+                    refit = "accuracy_score",
+                    verbose=2)
+
+grid_knn.fit(X_train, y_train)
+
+prediction_knn = grid_knn.predict(X_test)
+
+print(grid_knn.best_params_)
+print('Score of best knn_regressor :\t{}'.format(grid_knn.score(X_test, y_test)))
+
+
+# {'knn__algorithm': 'auto', 'knn__leaf_size': 10, 'knn__n_neighbors': 7, 'knn__p': 2, 'knn__weights': 'uniform'}
+# Score of best knn_regressor :	0.8372881355932204
+
