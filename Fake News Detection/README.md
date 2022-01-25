@@ -8,7 +8,7 @@ All news are not real, right?
 
 How will you detect fake news?
 
-The answer is Python. By practicing this advanced python project of detecting fake news, you will easily make a difference between real and fake news.
+The answer is Python. By practicing this project of detecting fake news, you will easily make a difference between real and fake news.
 
 # ✉️ What is Fake News?
 
@@ -33,14 +33,25 @@ In the project we tried seven models to classify our dataset, in the Jupyter not
    
 # :pushpin: SCORE OF MODELS
 
-#### For the score we used the "Accuary score"
+***
+
+#### For the score we used the "Accuracy score"
 
 Model | Random_Forest | Decision_Trees | Naive_Bayes | KNeighborsClassifier | XGBoost | SVC | TF-IDF
 --- | --- | --- | --- |--- |--- |--- |---
-Score | 91.69% | 81.9% | 87% | 286 | 91.48% | 285 | 92.28%
+Accuracy Score | 91.69% | 81.9% | 87% | 286 | 91.48% | 285 | 92.28%
+
 # 📂 DATASET
+
+***
 
  ### [Link to dataset](https://drive.google.com/file/d/1er9NJTLUA3qnRuyhfzuN0XUsoIC4a-_q/view)
 
 # :bar_chart: COMPARAISON BETWEEN MODELS
+
+***
+
+
+Now let's compare all the seven models, and plot them in a barplot.
+
 
