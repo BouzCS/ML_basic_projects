@@ -28,7 +28,7 @@ In the project we tried seven models to classify our dataset, in the Jupyter not
     4. KNeighborsClassifier
     5. XGBoost
     6. SVC
-    7. TF-IDF Model
+    7. PassiveAggressiveClassifier
    
    
 # :pushpin: SCORE OF MODELS
