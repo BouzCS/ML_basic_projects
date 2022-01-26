@@ -37,7 +37,7 @@ In the project we tried six models to classify our dataset, in the Jupyter noteb
 #### For the score we used the "Accuracy score"
 
 Model | Random_Forest | Decision_Trees | Naive_Bayes | XGBoost | SVC | PassiveAggressiveClassifier
---- | --- | --- | --- |--- |--- |--- |---
+--- | --- | --- | --- |--- |--- |---
 Accuracy Score | 91.69% | 81.9% | 87% | 91.48% | 91.42% | 92.28%
 
 # 📂 DATASET
