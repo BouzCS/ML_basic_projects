@@ -20,15 +20,14 @@ A type of yellow journalism, fake news encapsulates pieces of news that may be h
 
 ***
 
-In the project we tried seven models to classify our dataset, in the Jupyter notebook you'll find Data pre-processing phases, and also the modelling of the six models
+In the project we tried six models to classify our dataset, in the Jupyter notebook you'll find Data pre-processing phases, and also the modelling of the six models
 
     1. Random_Forest
     2. Decision_Trees
     3. Naive_Bayes
-    4. KNeighborsClassifier
-    5. XGBoost
-    6. SVC
-    7. PassiveAggressiveClassifier
+    4. XGBoost
+    5. SVC
+    6. PassiveAggressiveClassifier
    
    
 # :pushpin: SCORE OF MODELS
@@ -37,9 +36,9 @@ In the project we tried seven models to classify our dataset, in the Jupyter not
 
 #### For the score we used the "Accuracy score"
 
-Model | Random_Forest | Decision_Trees | Naive_Bayes | KNeighborsClassifier | XGBoost | SVC | PassiveAggressiveClassifier
---- | --- | --- | --- |--- |--- |--- |---
-Accuracy Score | 91.69% | 81.9% | 87% | 286 | 91.48% | 285 | 92.28%
+Model | Random_Forest | Decision_Trees | Naive_Bayes | XGBoost | SVC | PassiveAggressiveClassifier
+--- | --- | --- | --- |--- |--- |---
+Accuracy Score | 91.69% | 81.9% | 87% | 91.48% | 91.42% | 92.28%
 
 # 📂 DATASET
 
@@ -54,4 +53,4 @@ Accuracy Score | 91.69% | 81.9% | 87% | 286 | 91.48% | 285 | 92.28%
 
 Now let's compare all the seven models, and plot them in a barplot.
 
-
+![img_barplot](https://github.com/BouzCS/ML_basic_projects/blob/main/Fake%20News%20Detection/PlotImage.png)
