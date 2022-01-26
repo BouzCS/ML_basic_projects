@@ -53,4 +53,4 @@ Accuracy Score | 91.69% | 81.9% | 87% | 91.48% | 91.42% | 92.28%
 
 Now let's compare all the seven models, and plot them in a barplot.
 
-[!img_barplot](https://github.com/BouzCS/ML_basic_projects/blob/main/Fake%20News%20Detection/PlotImage.png)
+![img_barplot](https://github.com/BouzCS/ML_basic_projects/blob/main/Fake%20News%20Detection/PlotImage.png)
