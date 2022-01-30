@@ -6,7 +6,7 @@
 
 ***
 
-in this respository you will find three basic projetcs that you can use to start in your machine learning journey
+in this respository you will find three basic projetcs, that you can use to start in your machine learning journey
 and the three projects are :
 
   ## - Titanic Survival project
